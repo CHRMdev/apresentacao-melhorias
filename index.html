@@ -216,6 +216,18 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
 .zone{position:fixed;top:0;bottom:0;width:15%;z-index:40;cursor:pointer}
 .zone.l{left:0} .zone.r{right:0}
 
+/* ---------- marca Azul: selo na capa/encerramento e no rodapé ---------- */
+.cover::after{
+  content:'';position:absolute;top:44px;right:64px;width:104px;height:104px;
+  background:url('img/logo-azul.png') center/contain no-repeat;
+  opacity:.95;z-index:2;filter:drop-shadow(0 10px 24px rgba(0,0,0,.55));
+}
+.foot span:first-child{display:inline-flex;align-items:center;gap:10px}
+.foot span:first-child::before{
+  content:'';width:20px;height:20px;flex:none;opacity:1;
+  background:url('img/logo-azul.png') center/contain no-repeat;
+}
+
 /* ---------- impressão / exportar PDF ---------- */
 @page{size:1280px 720px;margin:0}
 @media print{
