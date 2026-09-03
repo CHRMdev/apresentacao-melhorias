@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferramentas do TECAN — Backlog de piso e Paletização Shopee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Paleta herdada das próprias ferramentas: as duas telas são
+   azul-noite com azul de ação, âmbar de atenção e verde/vermelho
+   de status. O deck usa a mesma identidade, então o screenshot
+   nunca parece colado no slide.
+   ============================================================ */
+:root{
+  --bg:#070C16; --panel:#0E1626; --panel-2:#131E33;
+  --line:#22314E; --line-soft:#1A2740;
+  --ink:#EAF0FB; --muted:#93A6C4; --dim:#5F7391;
+  --blue:#3B82F6; --blue-lt:#7CB0FF;
+  --amber:#F59E0B; --green:#22C55E;
+  --f-sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-mono:'JetBrains Mono','Consolas',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--f-sans);
+  font-feature-settings:'tnum' 1;overflow:hidden;-webkit-font-smoothing:antialiased;
+}
+
+/* ---------- palco: 1280x720 fixo, escalado para caber na tela ---------- */
+#stage{position:fixed;inset:0;display:grid;place-items:center}
+#deck{width:1280px;height:720px;position:relative;transform-origin:center center}
+.slide{
+  position:absolute;inset:0;width:1280px;height:720px;
+  background:var(--panel);border:1px solid var(--line-soft);
+  padding:52px 68px;display:none;flex-direction:column;overflow:hidden;
+}
+.slide.on{display:flex}
+.slide::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(900px 460px at 88% -12%, rgba(59,130,246,.16), transparent 62%),
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px) 0 0/100% 40px,
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px) 0 0/40px 100%;
+}
+.slide > *{position:relative;z-index:1}
+
+/* ---------- tipografia ---------- */
+.eyebrow{
+  font-size:11.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--blue-lt);display:flex;align-items:center;gap:12px;margin-bottom:12px;
+}
+.eyebrow::after{content:'';height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+.eyebrow.amb{color:var(--amber)}
+h1{font-size:70px;font-weight:900;letter-spacing:-.035em;line-height:1.04}
+h2{font-size:40px;font-weight:800;letter-spacing:-.025em;line-height:1.12;margin-bottom:10px}
+.lead{font-size:16.5px;line-height:1.55;color:var(--muted)}
+strong{color:var(--ink);font-weight:700}
+em{color:var(--blue-lt);font-style:normal;font-weight:600}
+.mono{font-family:var(--f-mono)}
+
+/* ---------- capa / encerramento ---------- */
+.cover{
+  justify-content:center;
+  background:
+    radial-gradient(1100px 700px at 78% 8%, rgba(29,78,216,.36), transparent 60%),
+    linear-gradient(160deg,#0D1728 0%,#070C16 100%);
+}
+.cover .tag{
+  display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+  border:1px solid var(--line);background:rgba(59,130,246,.08);
+  padding:8px 16px;border-radius:999px;font-size:11.5px;font-weight:800;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--blue-lt);margin-bottom:32px;
+}
+.cover .tag i{width:7px;height:7px;border-radius:50%;background:var(--green);font-style:normal;
+  box-shadow:0 0 0 4px rgba(34,197,94,.18)}
+.cover h1 span{display:block;color:var(--blue-lt)}
+.cover .sub{font-size:20px;color:var(--muted);line-height:1.55;max-width:56ch;margin-top:24px}
+.cover .by{
+  margin-top:auto;padding-top:24px;border-top:1px solid var(--line-soft);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+}
+.cover .by b{display:block;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.cover .by small{display:block;font-size:12.5px;color:var(--dim);letter-spacing:.04em;margin-top:5px}
+.cover .stackline{font-family:var(--f-mono);font-size:12px;color:var(--dim);text-align:right;line-height:1.8}
+
+/* ---------- cards ---------- */
+.cols{display:grid;gap:26px;flex:1;min-height:0;margin-top:20px}
+.c-2{grid-template-columns:1fr 1fr}
+.card{
+  background:linear-gradient(180deg,var(--panel-2),rgba(19,30,51,.5));
+  border:1px solid var(--line-soft);border-radius:16px;padding:30px 30px 32px;
+  display:flex;flex-direction:column;justify-content:center;gap:12px;
+}
+.card .kicker{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue-lt);
+}
+.card h3{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.card p{font-size:15px;line-height:1.6;color:var(--muted)}
+.card ul{list-style:none;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft);
+  display:flex;flex-direction:column;gap:7px}
+.card li{font-size:13.5px;color:var(--muted);display:flex;gap:9px;align-items:baseline}
+.card li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;
+  transform:translateY(-2px)}
+.card.amb{border-color:rgba(245,158,11,.3)}
+.card.amb .kicker{color:var(--amber)}
+.card.amb li::before{background:var(--amber)}
+
+/* ---------- imagens ---------- */
+.shot{
+  border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0A1120;
+  box-shadow:0 26px 56px -24px rgba(0,0,0,.85);position:relative;display:flex;
+}
+.shot img{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
+.shot.missing{min-height:220px;min-width:220px;
+  background:repeating-linear-gradient(45deg,#0C1424,#0C1424 12px,#0F1930 12px,#0F1930 24px)}
+.shot.missing img{display:none}
+.shot.missing::after{
+  content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--f-mono);font-size:12px;color:var(--dim);white-space:pre-line;
+  border:2px dashed var(--line);border-radius:14px;text-align:center;padding:18px;line-height:1.9;
+}
+
+/* O teto de altura da imagem é sempre em PIXELS (--picmax), nunca em percentual:
+   dentro de flex/grid o max-height:100% não resolve, a figura fica do tamanho
+   natural do screenshot e o overflow:hidden recorta a imagem em vez de reduzi-la.
+   Cada layout abaixo declara o seu --picmax conforme a altura que sobra no slide. */
+.pic{min-height:0;min-width:0;display:flex;align-items:center;justify-content:center}
+.pic .shot{max-height:var(--picmax);max-width:100%;min-height:0}
+.pic .shot img{max-height:var(--picmax);max-width:100%;width:auto;height:auto}
+
+/* imagem à esquerda + notas numeradas à direita */
+.split{--picmax:516px;display:grid;grid-template-columns:1fr 288px;gap:32px;flex:1;min-height:0;margin-top:16px;align-items:stretch}
+.split .pic{height:100%}
+.split .notes{align-self:center}
+/* variante arejada: screenshot vertical, que fica estreito ao ocupar a altura toda */
+.split.airy{grid-template-columns:1fr 440px;gap:44px}
+.split.airy .notes{gap:18px}
+.split.airy .notes li p{font-size:15px}
+.notes{list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:14px}
+.notes li{counter-increment:n;display:grid;grid-template-columns:26px 1fr;gap:13px;align-items:start}
+.notes li::before{
+  content:counter(n,decimal-leading-zero);font-family:var(--f-mono);font-size:11px;font-weight:700;
+  color:var(--blue-lt);background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);
+  border-radius:7px;width:26px;height:23px;display:grid;place-items:center;margin-top:2px;
+}
+.notes li p{font-size:13.5px;line-height:1.5;color:var(--muted)}
+
+/* imagem larga com as notas embaixo */
+.stack{--picmax:412px;flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;margin-top:16px}
+.stack .pic{flex:1}
+.stack .notes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 22px}
+.stack .notes li p{font-size:12.5px;line-height:1.45}
+
+/* tutorial: faixa larga do SmartKargo em cima, passos e tela de carga embaixo */
+.tut{display:flex;flex-direction:column;gap:18px;flex:1;min-height:0;margin-top:16px}
+.tut .band{--picmax:150px;flex:none}
+.howto{--picmax:340px;display:grid;grid-template-columns:1fr 520px;gap:38px;flex:1;min-height:0;align-items:center}
+.howto .pic{height:100%}
+.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:22px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:16px}
+.steps li::before{
+  content:counter(s,decimal-leading-zero);font-family:var(--f-mono);font-size:26px;font-weight:700;
+  line-height:1;color:transparent;-webkit-text-stroke:1.3px var(--blue);
+}
+.steps h3{font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px}
+.steps p{font-size:14px;line-height:1.55;color:var(--muted)}
+.imgstack{display:flex;flex-direction:column;gap:14px}
+
+/* quatro telas do coletor lado a lado */
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1;min-height:0;margin-top:16px}
+.fs{display:flex;flex-direction:column;gap:13px;min-height:0}
+.fs .pic{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:center}
+.fs .shot img{max-height:352px}
+.fs .n{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--blue-lt);
+  letter-spacing:.12em;margin-bottom:5px}
+.fs h3{font-size:14.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:7px}
+.fs p{font-size:13px;line-height:1.5;color:var(--muted)}
+
+/* ---------- faixas ---------- */
+.strip{
+  margin-top:16px;border-left:3px solid var(--amber);background:rgba(245,158,11,.07);
+  padding:12px 20px;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--muted);line-height:1.55;
+}
+.strip b{color:var(--amber)}
+.strip.blue{border-color:var(--blue);background:rgba(59,130,246,.08)}
+.strip.blue b{color:var(--blue-lt)}
+.pending{
+  display:inline-flex;align-items:center;font-family:var(--f-mono);font-size:10px;
+  font-weight:700;letter-spacing:.08em;color:#0A0F1A;background:var(--amber);
+  padding:3px 8px;border-radius:5px;margin-right:6px;
+}
+
+/* cadeia de rastreabilidade, em uma linha */
+.chain{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chain span{
+  font-size:12.5px;font-weight:700;color:var(--ink);background:rgba(59,130,246,.12);
+  border:1px solid rgba(59,130,246,.28);border-radius:7px;padding:5px 11px;
+}
+.chain i{font-style:normal;color:var(--dim);font-size:13px}
+
+/* ---------- rodapé / navegação ---------- */
+.foot{
+  position:absolute;left:68px;right:68px;bottom:20px;display:flex;justify-content:space-between;
+  align-items:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);font-weight:700;z-index:2;
+}
+.cover .foot{display:none}
+#bar{position:fixed;left:0;bottom:0;height:3px;background:var(--blue);z-index:50;transition:width .28s ease}
+#hint{position:fixed;right:16px;bottom:14px;font-size:11px;color:#3A4A66;letter-spacing:.1em;
+  font-family:var(--f-mono);z-index:50;transition:opacity .5s}
+.zone{position:fixed;top:0;bottom:0;width:15%;z-index:40;cursor:pointer}
+.zone.l{left:0} .zone.r{right:0}
+
+/* ---------- impressão / exportar PDF ---------- */
+@page{size:1280px 720px;margin:0}
+@media print{
+  body{overflow:visible}
+  #stage{position:static;display:block}
+  #deck{width:auto;height:auto;transform:none!important}
+  .slide{position:static;display:flex!important;width:1280px;height:720px;
+    page-break-after:always;break-after:page;border:0}
+  #bar,#hint,.zone{display:none}
+}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 01 · CAPA -->
+<section class="slide cover on">
+  <div class="tag"><i></i> TECAN · Aeroporto Internacional de Viracopos</div>
+  <h1>Backlog de piso<br><span>e Paletização Shopee</span></h1>
+  <p class="sub">Duas ferramentas construídas dentro da operação, para o trabalho do dia a dia do terminal de cargas.</p>
+  <div class="by">
+    <div>
+      <b>Desenvolvido por Caio Henrique</b>
+      <small>Terminal de Cargas · TECAN · Viracopos</small>
+    </div>
+    <div class="stackline">Sem custo de licença<br>Sem projeto de TI</div>
+  </div>
+</section>
+
+<!-- 02 · AS DUAS FERRAMENTAS -->
+<section class="slide">
+  <div class="eyebrow">01 — Visão geral</div>
+  <h2>O que foi construído</h2>
+  <div class="cols c-2">
+    <div class="card">
+      <div class="kicker">Piso TECAN</div>
+      <h3>Backlog de baixa e desembarque</h3>
+      <p>Lê o relatório de AWBs exportado do SmartKargo e mostra, em ordem de criticidade, o que ainda está no piso e o que falta dar baixa.</p>
+      <ul>
+        <li>Usada pela coordenação, no desktop</li>
+        <li>Do arquivo à tela em três passos</li>
+        <li>O relatório é lido no próprio navegador</li>
+      </ul>
+    </div>
+    <div class="card amb">
+      <div class="kicker">Paletização Shopee</div>
+      <h3>Registro digital da paletização</h3>
+      <p>Registra cada saca bipada no coletor, entrega a Paletag pronta para transcrição e acompanha a operação em uma tela de relatórios.</p>
+      <ul>
+        <li>Usada no pátio e pela coordenação</li>
+        <li>Roda no navegador do coletor Zebra</li>
+        <li>Cada saca vira uma linha rastreável</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strip blue">As duas foram desenvolvidas internamente, sobre ferramentas que a operação já tem. <b>Sem custo de licença e sem projeto de TI.</b></div>
+  <div class="foot"><span>Ferramentas do TECAN</span><span>02</span></div>
+</section>
+
+<!-- 03 · BACKLOG: A PLATAFORMA -->
+<section class="slide">
+  <div class="eyebrow">02 — Backlog de piso</div>
+  <h2>A carga que ainda está no piso, em ordem de urgência</h2>
+  <div class="split">
+    <div class="pic">
+      <figure class="shot" data-file="img/backlog-lista.png"><img src="img/backlog-lista.png" alt="Tela principal do Backlog do Piso TECAN"></figure>
+    </div>
+    <ol class="notes">
+      <li><p><strong>Quatro faixas de criticidade</strong> no topo: crítico acima de 10 dias no piso, atenção de 5 a 10, no prazo abaixo de 5, e o que ainda nem chegou.</p></li>
+      <li><p><strong>A lista abre pela AWB há mais tempo no piso.</strong> O topo da tela é sempre o que precisa de ação primeiro.</p></li>
+      <li><p>Cada linha traz cliente, AWB, peças, peso, voo e entrada. <strong>“Detalhes”</strong> abre todos os campos do relatório sem sair da tela.</p></li>
+      <li><p><strong>O arquivo é lido no próprio navegador.</strong> Nada do relatório sai da máquina de quem está usando.</p></li>
+    </ol>
+  </div>
+  <div class="foot"><span>Backlog de piso</span><span>03</span></div>
+</section>
+
+<!-- 04 · BACKLOG: COMO USAR -->
+<section class="slide">
+  <div class="eyebrow">03 — Backlog de piso</div>
+  <h2>Do relatório da Azul à tela, em três passos</h2>
+  <div class="tut">
+  <div class="pic band">
+    <figure class="shot" data-file="img/backlog-smartkargo.png"><img src="img/backlog-smartkargo.png" alt="Filtros do relatório AWB Operation Status no SmartKargo"></figure>
+  </div>
+  <div class="howto">
+    <ol class="steps">
+      <li><div>
+        <h3>Exportar</h3>
+        <p>No SmartKargo: <strong>Reports › Standard › AWB Operation Status</strong>, com origem MAO, destino VCP e OpsStation VCP. Exportar.</p>
+      </div></li>
+      <li><div>
+        <h3>Carregar</h3>
+        <p>Na página do Backlog, escolher o arquivo, arrastá-lo para a tela, ou <strong>colar as células direto do Excel</strong>.</p>
+      </div></li>
+      <li><div>
+        <h3>Trabalhar de cima para baixo</h3>
+        <p>Rota, clientes do TECAN, RETIRA × ENTREGA e o status de concluída <strong>já vêm aplicados</strong>. A lista chega pronta.</p>
+      </div></li>
+    </ol>
+    <div class="pic">
+      <figure class="shot" data-file="img/backlog-import.png"><img src="img/backlog-import.png" alt="Tela de carregamento do relatório"></figure>
+    </div>
+  </div>
+  </div>
+  <div class="foot"><span>Backlog de piso</span><span>04</span></div>
+</section>
+
+<!-- 05 · BACKLOG: AS FILAS -->
+<section class="slide">
+  <div class="eyebrow">04 — Backlog de piso</div>
+  <h2>Quatro filas de trabalho, uma tela só</h2>
+  <div class="stack">
+    <div class="pic">
+      <figure class="shot" data-file="img/backlog-filas.png"><img src="img/backlog-filas.png" alt="Abas de filas de trabalho do Backlog"></figure>
+    </div>
+    <ol class="notes">
+      <li><p><strong>Dar baixa, pendente de desembarque, abrir chamado e já concluídas.</strong> A mesma carga aparece separada pelo que precisa ser feito com ela.</p></li>
+      <li><p><strong>Priorização automática:</strong> cada fila já chega ordenada por tempo no piso, com o contador ao lado do nome da aba.</p></li>
+      <li><p><strong>Copiar AWB na própria linha</strong>, além de Copiar AWBs e Copiar tabela para tratar em lote.</p></li>
+      <li><p><strong>Decisão com o dado na mão:</strong> cliente, peças, peso, voo e dias no piso estão na mesma linha da ação.</p></li>
+    </ol>
+  </div>
+  <div class="foot"><span>Backlog de piso</span><span>05</span></div>
+</section>
+
+<!-- 06 · PALETIZAÇÃO: O FLUXO -->
+<section class="slide">
+  <div class="eyebrow amb">05 — Paletização Shopee</div>
+  <h2>Quatro telas no coletor, do primeiro bip à Paletag</h2>
+  <div class="four">
+    <div class="fs">
+      <div class="pic"><figure class="shot" data-file="img/print-1.png"><img src="img/print-1.png" alt="Abertura da lâmina"></figure></div>
+      <div><div class="n">PASSO 01</div><h3>Abrir a lâmina</h3><p>Operador, voo, data e a PAG. É o único momento de digitação da operação.</p></div>
+    </div>
+    <div class="fs">
+      <div class="pic"><figure class="shot" data-file="img/print-2.png"><img src="img/print-2.png" alt="Bipagem das sacas"></figure></div>
+      <div><div class="n">PASSO 02</div><h3>Bipar as sacas</h3><p>O campo fica sempre armado. Cada bip responde com som, vibração e cor.</p></div>
+    </div>
+    <div class="fs">
+      <div class="pic"><figure class="shot" data-file="img/print-3.png"><img src="img/print-3.png" alt="Pesagem e fechamento"></figure></div>
+      <div><div class="n">PASSO 03</div><h3>Pesar e fechar</h3><p>O operador digita um único número: o valor lido na balança.</p></div>
+    </div>
+    <div class="fs">
+      <div class="pic"><figure class="shot" data-file="img/print-4.png"><img src="img/print-4.png" alt="Paletag pronta para transcrição"></figure></div>
+      <div><div class="n">PASSO 04</div><h3>Transcrever</h3><p>A tela vira a réplica da Paletag e o operador copia campo por campo.</p></div>
+    </div>
+  </div>
+  <div class="strip blue">Alcançada por um <b>QR code plastificado na doca</b>, a ferramenta cabe inteira na tela útil do coletor, com botões grandes para dedo com luva. Se a rede cai, o bip vai para uma fila local e é reenviado sozinho — sem duplicar a linha.</div>
+  <div class="foot"><span>Paletização Shopee</span><span>06</span></div>
+</section>
+
+<!-- 07 · PALETIZAÇÃO: A PALETAG -->
+<section class="slide">
+  <div class="eyebrow amb">06 — Paletização Shopee</div>
+  <h2>A Paletag: a tela vira o documento</h2>
+  <div class="split airy">
+    <div class="pic">
+      <figure class="shot" data-file="img/print-4.png"><img src="img/print-4.png" alt="Tela da Paletag pronta para transcrição"></figure>
+    </div>
+    <ol class="notes">
+      <li><p>A tela não é um formulário — é um <strong>roteiro de transcrição</strong>. Replica o papel campo por campo, na mesma ordem e com os mesmos rótulos em inglês.</p></li>
+      <li><p><strong>O que a ferramenta sabe aparece em destaque</strong>; o que ela não sabe é dito explicitamente: “Preencher à mão” e “Deixar em branco”.</p></li>
+      <li><p>A ferramenta identifica quando a lâmina <strong>reúne sacas de dias de origem diferentes</strong> e informa a data predominante, que é a que vai para o papel.</p></li>
+    </ol>
+  </div>
+  <div class="foot"><span>Paletização Shopee</span><span>07</span></div>
+</section>
+
+<!-- 08 · PALETIZAÇÃO: A BASE -->
+<section class="slide">
+  <div class="eyebrow amb">07 — Paletização Shopee</div>
+  <h2>Cada saca bipada é uma linha rastreável</h2>
+  <div class="chain">
+    <span>Saca</span><i>→</i><span>Lâmina</span><i>→</i><span>Voo</span><i>→</i><span>Data e hora</span><i>→</i><span>Operador</span><i>→</i><span>Coletor</span>
+  </div>
+  <div class="stack" style="--picmax:385px">
+    <div class="pic">
+      <figure class="shot" data-file="img/print-5.png"><img src="img/print-5.png" alt="Planilha base com o registro de cada saca"></figure>
+    </div>
+    <ol class="notes">
+      <li><p><span class="mono" style="color:var(--blue-lt)">Codigo_Saca</span> — o número da TO, com 15 caracteres exatos. É a chave de rastreio.</p></li>
+      <li><p><span class="mono" style="color:var(--blue-lt)">Data_Codigo</span> — a data de origem, que vem <strong>de dentro do próprio código</strong> da saca.</p></li>
+      <li><p><span class="mono" style="color:var(--blue-lt)">ID_ULD</span> — voo + data + PAG. É o que amarra a saca ao palete.</p></li>
+      <li><p>Estrutura plana, cada linha um fato: <strong>a base pode alimentar o Power BI direto</strong>, sem tratamento.</p></li>
+    </ol>
+  </div>
+  <div class="foot"><span>Paletização Shopee</span><span>08</span></div>
+</section>
+
+<!-- 09 · PALETIZAÇÃO: O PAINEL -->
+<section class="slide">
+  <div class="eyebrow amb">08 — Paletização Shopee</div>
+  <h2>A operação em números, na mesma base</h2>
+  <div class="split" style="--picmax:452px">
+    <div class="pic">
+      <figure class="shot" data-file="img/print-6.png"><img src="img/print-6.png" alt="Painel de acompanhamento da operação"></figure>
+    </div>
+    <ol class="notes">
+      <li><p>Filtro por período, voo, PAG e operador; rastreio de qualquer saca pelo código; exportação em CSV.</p></li>
+      <li><p><strong>Produtividade por hora</strong> — o ritmo é calculado só sobre as horas com movimento, para refletir o trabalho real.</p></li>
+      <li><p><strong>Dias de origem por lâmina</strong> — a composição de cada palete por data de origem, com percentual e amplitude.</p></li>
+      <li><p>Tudo isso é subproduto do registro: <strong>não exige trabalho adicional do pátio</strong>.</p></li>
+    </ol>
+  </div>
+  <div class="strip"><span class="pending">BASE DE DEMONSTRAÇÃO</span> Os valores desta tela vêm de base de teste e servem para ilustrar a ferramenta, não o volume da operação.</div>
+  <div class="foot"><span>Paletização Shopee</span><span>09</span></div>
+</section>
+
+<!-- 10 · ENCERRAMENTO -->
+<section class="slide cover">
+  <div class="tag"><i></i> Obrigado</div>
+  <h1>Construídas dentro<br><span>da operação.</span></h1>
+  <p class="sub">As duas rodam sobre ferramentas que o terminal já tem. Cadastros, parâmetros e ajustes de rotina são feitos sem mexer no sistema.</p>
+  <div class="by">
+    <div>
+      <b>Caio Henrique</b>
+      <small>Dúvidas, sugestões e ajustes</small>
+    </div>
+    <div class="stackline">Backlog de piso · Paletização Shopee<br>TECAN · Viracopos</div>
+  </div>
+</section>
+
+</div></div>
+
+<div id="bar"></div>
+<div id="hint">← → navegar · F tela cheia · P imprimir</div>
+<div class="zone l"></div><div class="zone r"></div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const bar=document.getElementById('bar');
+const deck=document.getElementById('deck');
+const hint=document.getElementById('hint');
+let i=0;
+
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  bar.style.width=((i+1)/slides.length*100)+'%';
+  history.replaceState(null,'','#'+(i+1));
+}
+function fit(){
+  deck.style.transform='scale('+Math.min(innerWidth/1280,innerHeight/720)+')';
+}
+addEventListener('resize',fit); fit();
+
+addEventListener('keydown',e=>{
+  const k=e.key;
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(k)){e.preventDefault();show(i+1);}
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(k)){e.preventDefault();show(i-1);}
+  else if(k==='Home'){show(0);}
+  else if(k==='End'){show(slides.length-1);}
+  else if(k.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  else if(k.toLowerCase()==='p'){print();}
+});
+document.querySelector('.zone.r').onclick=()=>show(i+1);
+document.querySelector('.zone.l').onclick=()=>show(i-1);
+
+/* placeholder legível caso algum arquivo de imagem falte */
+document.querySelectorAll('.shot img').forEach(img=>{
+  const fail=()=>{
+    const f=img.closest('.shot');
+    if(f.classList.contains('missing'))return;
+    f.classList.add('missing');
+    f.dataset.label='falta o arquivo\n'+f.dataset.file;
+  };
+  img.addEventListener('error',fail);
+  if(img.complete&&img.naturalWidth===0)fail();
+});
+
+show(parseInt((location.hash||'').slice(1))-1||0);
+setTimeout(()=>hint.style.opacity=0,4500);
+</script>
+</body>
+</html>
