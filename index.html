@@ -148,24 +148,6 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
   transform:translateY(-2px)}
 .person.amb li::before{background:var(--amber)}
 
-/* duas frentes lado a lado, separadas por um fio */
-.duo{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 44px;flex:1;min-height:0;margin-top:48px;align-items:start}
-.duo .rule{width:1px;height:100%;background:linear-gradient(180deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
-.col{display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
-.duo .rule{align-self:stretch}
-.col-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
-  padding-bottom:16px;margin-bottom:26px;border-bottom:1px solid var(--line-soft)}
-.col-head b{font-size:24px;font-weight:800;letter-spacing:-.02em}
-.col-head small{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--blue-lt)}
-.col.amb .col-head small{color:var(--amber)}
-.col .notes{gap:22px}
-.col .notes li{grid-template-columns:30px 1fr;gap:16px}
-.col .notes li::before{width:30px;height:26px;font-size:11.5px}
-.col .notes li p{font-size:15px;line-height:1.55}
-.col.amb .notes li::before{color:var(--amber);background:rgba(245,158,11,.12);
-  border-color:rgba(245,158,11,.3)}
-
 /* ---------- imagens ---------- */
 .shot{
   border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0A1120;
@@ -558,49 +540,6 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
   </div>
   <div class="strip blue">As duas frentes cobrem o mesmo equipamento por ângulos diferentes: <b>o que está registrado no sistema e o que está montado no pátio.</b></div>
   <div class="foot"><span>Novo formato ULD TECAN</span><span>12</span></div>
-</section>
-
-<!-- 13 · ULD: A DIVISÃO DO TRABALHO -->
-<section class="slide">
-  <div class="eyebrow">12 — Novo formato ULD TECAN</div>
-  <h2>O que cada frente cobre no dia a dia</h2>
-  <div class="duo">
-    <div class="col">
-      <div class="col-head"><b>Caio Henrique</b><small>Frente sistêmica</small></div>
-      <ol class="notes">
-        <li><p><strong>Parte sistêmica</strong> — lançamentos e acertos no sistema de controle de ULD.</p></li>
-        <li><p><strong>Controle de inventário</strong> — o que a base tem, onde está e em que condição.</p></li>
-        <li><p><strong>Comunicação com as outras bases</strong> — troca de informação e alinhamento de equipamento entre as bases.</p></li>
-        <li><p><strong>Reuniões</strong> — participação nas reuniões de ULD da Azul Logística.</p></li>
-      </ol>
-    </div>
-    <div class="rule"></div>
-    <div class="col amb">
-      <div class="col-head"><b>Bruno Alessandro</b><small>Frente operacional</small></div>
-      <ol class="notes">
-        <li><p><strong>Parte operacional</strong> — condução do controle de ULD dentro da operação.</p></li>
-        <li><p><strong>Montagem de stacks</strong> — organização e montagem dos equipamentos.</p></li>
-        <li><p><strong>Controle de fitas</strong> — controle das fitas usadas na operação.</p></li>
-        <li><p><strong>Validade dos equipamentos</strong> — acompanhamento dos prazos de cada equipamento.</p></li>
-      </ol>
-    </div>
-  </div>
-  <div class="strip blue">Cada equipamento tem alguém respondendo pelos dois lados: <b>o registro e o pátio.</b> As duas frentes atendem toda a Azul Logística.</div>
-  <div class="foot"><span>Novo formato ULD TECAN</span><span>13</span></div>
-</section>
-
-<!-- 14 · ENCERRAMENTO -->
-<section class="slide cover">
-  <div class="tag"><i></i> Obrigado</div>
-  <h1>Construídas dentro<br><span>da operação.</span></h1>
-  <p class="sub">As duas rodam sobre ferramentas que o terminal já tem. Cadastros, parâmetros e ajustes de rotina são feitos sem mexer no sistema.</p>
-  <div class="by">
-    <div>
-      <b>Caio Henrique</b>
-      <small>Dúvidas, sugestões e ajustes</small>
-    </div>
-    <div class="stackline">Backlog Piso TECAN · Paletização TECAN<br>Novo formato ULD TECAN<br>TECAN · Viracopos</div>
-  </div>
 </section>
 
 </div></div>
