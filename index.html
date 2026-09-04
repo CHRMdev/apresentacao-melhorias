@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ferramentas do TECAN — Backlog de piso e Paletização Shopee</title>
+<title>Ferramentas do TECAN — Backlog Piso TECAN, Paletização TECAN e Novo formato ULD TECAN</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="img/logo-azul.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -112,6 +112,59 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
 .card.amb{border-color:rgba(245,158,11,.3)}
 .card.amb .kicker{color:var(--amber)}
 .card.amb li::before{background:var(--amber)}
+
+/* ---------- dupla responsável (ULD) ---------- */
+.people{display:grid;grid-template-columns:1fr 1fr;gap:26px;flex:1;min-height:0;margin-top:20px}
+.person{
+  background:linear-gradient(180deg,var(--panel-2),rgba(19,30,51,.5));
+  border:1px solid var(--line-soft);border-radius:16px;padding:28px 30px;
+  display:flex;flex-direction:column;gap:11px;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.person::after{
+  content:'';position:absolute;right:-46px;top:-46px;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,130,246,.20),transparent 68%);pointer-events:none;
+}
+.person.amb{border-color:rgba(245,158,11,.3)}
+.person.amb::after{background:radial-gradient(circle,rgba(245,158,11,.17),transparent 68%)}
+.person > *{position:relative;z-index:1}
+.avatar{
+  width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  font-family:var(--f-mono);font-size:17px;font-weight:700;letter-spacing:.05em;
+  color:var(--blue-lt);background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.32);
+}
+.person.amb .avatar{color:var(--amber);background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.32)}
+.person .role{
+  font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue-lt);margin-bottom:5px;
+}
+.person.amb .role{color:var(--amber)}
+.person h3{font-size:28px;font-weight:800;letter-spacing:-.022em;line-height:1.12}
+.person p{font-size:14.5px;line-height:1.55;color:var(--muted)}
+.person ul{list-style:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);
+  display:flex;flex-direction:column;gap:7px}
+.person li{font-size:13.5px;color:var(--muted);display:flex;gap:9px;align-items:baseline}
+.person li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;
+  transform:translateY(-2px)}
+.person.amb li::before{background:var(--amber)}
+
+/* duas frentes lado a lado, separadas por um fio */
+.duo{display:grid;grid-template-columns:1fr 1px 1fr;gap:0 44px;flex:1;min-height:0;margin-top:48px;align-items:start}
+.duo .rule{width:1px;height:100%;background:linear-gradient(180deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
+.col{display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
+.duo .rule{align-self:stretch}
+.col-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding-bottom:16px;margin-bottom:26px;border-bottom:1px solid var(--line-soft)}
+.col-head b{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.col-head small{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue-lt)}
+.col.amb .col-head small{color:var(--amber)}
+.col .notes{gap:22px}
+.col .notes li{grid-template-columns:30px 1fr;gap:16px}
+.col .notes li::before{width:30px;height:26px;font-size:11.5px}
+.col .notes li p{font-size:15px;line-height:1.55}
+.col.amb .notes li::before{color:var(--amber);background:rgba(245,158,11,.12);
+  border-color:rgba(245,158,11,.3)}
 
 /* ---------- imagens ---------- */
 .shot{
@@ -249,8 +302,8 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
 <!-- 01 · CAPA -->
 <section class="slide cover on">
   <div class="tag"><i></i> TECAN · Aeroporto Internacional de Viracopos</div>
-  <h1>Backlog de piso<br><span>e Paletização Shopee</span></h1>
-  <p class="sub">Duas ferramentas construídas dentro da operação, para o trabalho do dia a dia do terminal de cargas.</p>
+  <h1>Backlog Piso<br><span>TECAN</span></h1>
+  <p class="sub">Ferramenta construída dentro da operação, para o trabalho do dia a dia do terminal de cargas.</p>
   <div class="by">
     <div>
       <b>Desenvolvido por Caio Henrique</b>
@@ -292,7 +345,7 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
 
 <!-- 03 · BACKLOG: A PLATAFORMA -->
 <section class="slide">
-  <div class="eyebrow">02 — Backlog de piso</div>
+  <div class="eyebrow">02 — Backlog Piso TECAN</div>
   <h2>A carga que ainda está no piso, em ordem de urgência</h2>
   <div class="split">
     <div class="pic">
@@ -305,12 +358,12 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
       <li><p><strong>O arquivo é lido no próprio navegador.</strong> Nada do relatório sai da máquina de quem está usando.</p></li>
     </ol>
   </div>
-  <div class="foot"><span>Backlog de piso</span><span>03</span></div>
+  <div class="foot"><span>Backlog Piso TECAN</span><span>03</span></div>
 </section>
 
 <!-- 04 · BACKLOG: COMO USAR -->
 <section class="slide">
-  <div class="eyebrow">03 — Backlog de piso</div>
+  <div class="eyebrow">03 — Backlog Piso TECAN</div>
   <h2>Do relatório da Azul à tela, em três passos</h2>
   <div class="tut">
   <div class="pic band">
@@ -336,12 +389,12 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
     </div>
   </div>
   </div>
-  <div class="foot"><span>Backlog de piso</span><span>04</span></div>
+  <div class="foot"><span>Backlog Piso TECAN</span><span>04</span></div>
 </section>
 
 <!-- 05 · BACKLOG: AS FILAS -->
 <section class="slide">
-  <div class="eyebrow">04 — Backlog de piso</div>
+  <div class="eyebrow">04 — Backlog Piso TECAN</div>
   <h2>Quatro filas de trabalho, uma tela só</h2>
   <div class="stack">
     <div class="pic">
@@ -354,12 +407,26 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
       <li><p><strong>Decisão com o dado na mão:</strong> cliente, peças, peso, voo e dias no piso estão na mesma linha da ação.</p></li>
     </ol>
   </div>
-  <div class="foot"><span>Backlog de piso</span><span>05</span></div>
+  <div class="foot"><span>Backlog Piso TECAN</span><span>05</span></div>
 </section>
 
-<!-- 06 · PALETIZAÇÃO: O FLUXO -->
+<!-- 06 · DIVISÓRIA: PALETIZAÇÃO SHOPEE -->
+<section class="slide cover">
+  <div class="tag"><i></i> TECAN · Aeroporto Internacional de Viracopos</div>
+  <h1>Paletização<br><span>TECAN</span></h1>
+  <p class="sub">Segunda ferramenta desta apresentação: registro digital da paletização, do primeiro bip no coletor até a Paletag pronta para transcrição.</p>
+  <div class="by">
+    <div>
+      <b>Desenvolvido por Caio Henrique</b>
+      <small>Terminal de Cargas · TECAN · Viracopos</small>
+    </div>
+    <div class="stackline">Novo formato<br>Coletor Zebra</div>
+  </div>
+</section>
+
+<!-- 07 · PALETIZAÇÃO: O FLUXO -->
 <section class="slide">
-  <div class="eyebrow amb">05 — Paletização Shopee</div>
+  <div class="eyebrow amb">06 — Paletização TECAN</div>
   <h2>Quatro telas no coletor, do primeiro bip à Paletag</h2>
   <div class="four">
     <div class="fs">
@@ -380,12 +447,12 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
     </div>
   </div>
   <div class="strip blue">Alcançada por um <b>QR code plastificado na doca</b>, a ferramenta cabe inteira na tela útil do coletor, com botões grandes para dedo com luva. Se a rede cai, o bip vai para uma fila local e é reenviado sozinho — sem duplicar a linha.</div>
-  <div class="foot"><span>Paletização Shopee</span><span>06</span></div>
+  <div class="foot"><span>Paletização TECAN</span><span>07</span></div>
 </section>
 
-<!-- 07 · PALETIZAÇÃO: A PALETAG -->
+<!-- 08 · PALETIZAÇÃO: A PALETAG -->
 <section class="slide">
-  <div class="eyebrow amb">06 — Paletização Shopee</div>
+  <div class="eyebrow amb">07 — Paletização TECAN</div>
   <h2>A Paletag: a tela vira o documento</h2>
   <div class="split airy">
     <div class="pic">
@@ -397,12 +464,12 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
       <li><p>A ferramenta identifica quando a lâmina <strong>reúne sacas de dias de origem diferentes</strong> e informa a data predominante, que é a que vai para o papel.</p></li>
     </ol>
   </div>
-  <div class="foot"><span>Paletização Shopee</span><span>07</span></div>
+  <div class="foot"><span>Paletização TECAN</span><span>08</span></div>
 </section>
 
-<!-- 08 · PALETIZAÇÃO: A BASE -->
+<!-- 09 · PALETIZAÇÃO: A BASE -->
 <section class="slide">
-  <div class="eyebrow amb">07 — Paletização Shopee</div>
+  <div class="eyebrow amb">08 — Paletização TECAN</div>
   <h2>Cada saca bipada é uma linha rastreável</h2>
   <div class="chain">
     <span>Saca</span><i>→</i><span>Lâmina</span><i>→</i><span>Voo</span><i>→</i><span>Data e hora</span><i>→</i><span>Operador</span><i>→</i><span>Coletor</span>
@@ -418,12 +485,12 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
       <li><p>Estrutura plana, cada linha um fato: <strong>a base pode alimentar o Power BI direto</strong>, sem tratamento.</p></li>
     </ol>
   </div>
-  <div class="foot"><span>Paletização Shopee</span><span>08</span></div>
+  <div class="foot"><span>Paletização TECAN</span><span>09</span></div>
 </section>
 
-<!-- 09 · PALETIZAÇÃO: O PAINEL -->
+<!-- 10 · PALETIZAÇÃO: O PAINEL -->
 <section class="slide">
-  <div class="eyebrow amb">08 — Paletização Shopee</div>
+  <div class="eyebrow amb">09 — Paletização TECAN</div>
   <h2>A operação em números, na mesma base</h2>
   <div class="split" style="--picmax:452px">
     <div class="pic">
@@ -437,10 +504,92 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
     </ol>
   </div>
   <div class="strip"><span class="pending">BASE DE DEMONSTRAÇÃO</span> Os valores desta tela vêm de base de teste e servem para ilustrar a ferramenta, não o volume da operação.</div>
-  <div class="foot"><span>Paletização Shopee</span><span>09</span></div>
+  <div class="foot"><span>Paletização TECAN</span><span>10</span></div>
 </section>
 
-<!-- 10 · ENCERRAMENTO -->
+<!-- 11 · DIVISÓRIA: NOVO FORMATO ULD TECAN -->
+<section class="slide cover">
+  <div class="tag"><i></i> TECAN · Aeroporto Internacional de Viracopos</div>
+  <h1>Novo formato<br><span>ULD TECAN</span></h1>
+  <p class="sub">O controle de ULDs de toda a Azul Logística passa a ter dois responsáveis dedicados: uma frente sistêmica e uma frente operacional.</p>
+  <div class="by">
+    <div>
+      <b>Caio Henrique · Bruno Alessandro</b>
+      <small>Controle de ULD · Azul Logística</small>
+    </div>
+    <div class="stackline">Frente sistêmica<br>Frente operacional</div>
+  </div>
+</section>
+
+<!-- 12 · ULD: A DUPLA -->
+<section class="slide">
+  <div class="eyebrow">11 — Novo formato ULD TECAN</div>
+  <h2>Dois responsáveis pelo controle de ULDs</h2>
+  <p class="lead">Caio e Bruno passam a responder pelo controle de ULDs de toda a Azul Logística.</p>
+  <div class="people">
+    <div class="person">
+      <div class="avatar">CH</div>
+      <div>
+        <div class="role">Frente sistêmica</div>
+        <h3>Caio Henrique</h3>
+      </div>
+      <p>Responde pelo controle no sistema e pela interlocução do TECAN com o restante da rede.</p>
+      <ul>
+        <li>Parte sistêmica do controle</li>
+        <li>Controle de inventário</li>
+        <li>Comunicação com as outras bases</li>
+        <li>Participação nas reuniões</li>
+      </ul>
+    </div>
+    <div class="person amb">
+      <div class="avatar">BA</div>
+      <div>
+        <div class="role">Frente operacional</div>
+        <h3>Bruno Alessandro</h3>
+      </div>
+      <p>Responde pela execução do controle na operação, da montagem dos stacks ao acompanhamento da validade.</p>
+      <ul>
+        <li>Parte operacional do controle</li>
+        <li>Montagem de stacks</li>
+        <li>Controle de fitas</li>
+        <li>Acompanhamento da validade dos equipamentos</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strip blue">As duas frentes cobrem o mesmo equipamento por ângulos diferentes: <b>o que está registrado no sistema e o que está montado no pátio.</b></div>
+  <div class="foot"><span>Novo formato ULD TECAN</span><span>12</span></div>
+</section>
+
+<!-- 13 · ULD: A DIVISÃO DO TRABALHO -->
+<section class="slide">
+  <div class="eyebrow">12 — Novo formato ULD TECAN</div>
+  <h2>O que cada frente cobre no dia a dia</h2>
+  <div class="duo">
+    <div class="col">
+      <div class="col-head"><b>Caio Henrique</b><small>Frente sistêmica</small></div>
+      <ol class="notes">
+        <li><p><strong>Parte sistêmica</strong> — lançamentos e acertos no sistema de controle de ULD.</p></li>
+        <li><p><strong>Controle de inventário</strong> — o que a base tem, onde está e em que condição.</p></li>
+        <li><p><strong>Comunicação com as outras bases</strong> — troca de informação e alinhamento de equipamento entre as bases.</p></li>
+        <li><p><strong>Reuniões</strong> — participação nas reuniões de ULD da Azul Logística.</p></li>
+      </ol>
+    </div>
+    <div class="rule"></div>
+    <div class="col amb">
+      <div class="col-head"><b>Bruno Alessandro</b><small>Frente operacional</small></div>
+      <ol class="notes">
+        <li><p><strong>Parte operacional</strong> — condução do controle de ULD dentro da operação.</p></li>
+        <li><p><strong>Montagem de stacks</strong> — organização e montagem dos equipamentos.</p></li>
+        <li><p><strong>Controle de fitas</strong> — controle das fitas usadas na operação.</p></li>
+        <li><p><strong>Validade dos equipamentos</strong> — acompanhamento dos prazos de cada equipamento.</p></li>
+      </ol>
+    </div>
+  </div>
+  <div class="strip blue">Cada equipamento tem alguém respondendo pelos dois lados: <b>o registro e o pátio.</b> As duas frentes atendem toda a Azul Logística.</div>
+  <div class="foot"><span>Novo formato ULD TECAN</span><span>13</span></div>
+</section>
+
+<!-- 14 · ENCERRAMENTO -->
 <section class="slide cover">
   <div class="tag"><i></i> Obrigado</div>
   <h1>Construídas dentro<br><span>da operação.</span></h1>
@@ -450,7 +599,7 @@ em{color:var(--blue-lt);font-style:normal;font-weight:600}
       <b>Caio Henrique</b>
       <small>Dúvidas, sugestões e ajustes</small>
     </div>
-    <div class="stackline">Backlog de piso · Paletização Shopee<br>TECAN · Viracopos</div>
+    <div class="stackline">Backlog Piso TECAN · Paletização TECAN<br>Novo formato ULD TECAN<br>TECAN · Viracopos</div>
   </div>
 </section>
 
